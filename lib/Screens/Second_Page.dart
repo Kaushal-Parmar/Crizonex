@@ -1,4 +1,5 @@
 import 'package:crizonex/Screens/BoxPage.dart';
+import 'package:crizonex/Screens/UserInfo.dart';
 import 'package:flutter/material.dart';
 
 class ListOfBox extends StatefulWidget {
@@ -72,7 +73,9 @@ class _ListOfBoxState extends State<ListOfBox> {
                       ),
                       IconButton(
                         icon: Icon(Icons.person,color: Colors.white,size: 30,),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
+                        },
                       ),
                     ],
                   ),
@@ -97,7 +100,7 @@ class _ListOfBoxState extends State<ListOfBox> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: pics.length,
+                itemCount: pics.length??boxNames.length??addresses.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 16, right: 16,bottom: 10),

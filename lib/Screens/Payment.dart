@@ -1,4 +1,5 @@
 import 'package:crizonex/Screens/Second_Page.dart';
+import 'package:crizonex/Screens/UserInfo.dart';
 import 'package:flutter/material.dart';
 
 class Payment extends StatefulWidget {
@@ -36,22 +37,27 @@ class _PaymentState extends State<Payment> {
             width: 200,
           ),
           actions: [
+
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Column(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.notifications, color: Colors.white, size: 30),
+                    icon: Icon(Icons.notifications,color: Colors.white,size: 30,),
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: const Icon(Icons.person, color: Colors.white, size: 30),
-                    onPressed: () {},
+                    icon: Icon(Icons.person,color: Colors.white,size: 30,),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
+                    },
                   ),
                 ],
               ),
             ),
+
           ],
+
         ),
         body: Padding(
           padding: const EdgeInsets.all(10),
@@ -71,17 +77,15 @@ class _PaymentState extends State<Payment> {
                             crossAxisAlignment: CrossAxisAlignment.start,
             
                             children: [
-                              const Text(
-                                "StrEat Adda Box Cricket",
+                              Text(widget.boxname,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 softWrap: true,
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 3),
                               Flexible(
-                                child: Text(
-                                  "Streat Adda Cafe, Bhavnagar - Sidsar Rd, opp. GMIU College, opposite Gyanmanjari College, Bhavnagar, Gujarat 364001",
+                                child: Text(widget.address.toString(),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 5,
                                   softWrap: true,
@@ -98,7 +102,7 @@ class _PaymentState extends State<Payment> {
             
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(image: AssetImage("asset/images/p2b.jpg"),fit: BoxFit.cover)
+                          image: DecorationImage(image: AssetImage(widget.image.toString()),fit: BoxFit.cover)
             
                         ),
                       )

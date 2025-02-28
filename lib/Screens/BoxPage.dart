@@ -1,4 +1,5 @@
 import 'package:crizonex/Screens/Payment.dart';
+import 'package:crizonex/Screens/UserInfo.dart';
 import 'package:flutter/material.dart';
 
 class Boxpage extends StatefulWidget {
@@ -25,22 +26,54 @@ class _BoxpageState extends State<Boxpage> {
     "Special packages for company events and team-building activities."
 
   ];
-  // var Terms_Conditions=[
-  //   "Cancellation refunds are only applicable if canceled at least 24 hours before the booking.",
-  //   "No abusive language, misbehavior, or physical fights are tolerated.",
-  //   "Alcohol and smoking are strictly prohibited inside the facility.",
-  //   "Players are responsible for their safety. The management is not liable for injuries.",
-  //   "Any damage to the property or equipment must be compensated by the responsible individual/team.",
-  //   "Matches are played within a fixed time frame; delays may result in a penalty or forfeiture.",
-  //   "Players must arrive 15 minutes before their scheduled time.",
-  //   "No outside food or drinks allowed, except water bottles.",
-  //   "Tournament registrations are non-refundable.",
-  //   "Membership benefits are non-transferable and valid only for the registered member."
-  // ];
+  var Terms_Conditions=[
+    "Cancellation refunds are only applicable if canceled at least 24 hours before the booking.",
+    "No abusive language, misbehavior, or physical fights are tolerated.",
+    "Alcohol and smoking are strictly prohibited inside the facility.",
+    "Players are responsible for their safety. The management is not liable for injuries.",
+    "Any damage to the property or equipment must be compensated by the responsible individual/team.",
+    "Matches are played within a fixed time frame; delays may result in a penalty or forfeiture.",
+    "Players must arrive 15 minutes before their scheduled time.",
+    "No outside food or drinks allowed, except water bottles.",
+    "Tournament registrations are non-refundable.",
+    "Membership benefits are non-transferable and valid only for the registered member."
+  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 100,
+          backgroundColor: Colors.black.withOpacity(0.6),
+          title: Image.asset(
+            'asset/images/Text_logo2.png',
+            fit: BoxFit.contain,
+            height: 100,
+            width: 200,
+          ),
+          actions: [
+
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Column(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.notifications,color: Colors.white,size: 30,),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.person,color: Colors.white,size: 30,),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+          ],
+
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -61,7 +94,7 @@ class _BoxpageState extends State<Boxpage> {
                         height: MediaQuery.of(context).size.height/18,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-      
+
                         ),
                         child: Row(
                           children: [
@@ -75,21 +108,23 @@ class _BoxpageState extends State<Boxpage> {
                                   borderRadius: BorderRadius.circular(10)
                                 ),
 
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.location_pin),
-                                    SizedBox(width: 10,),
-                                    Text(widget.BoxName.toString(),
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                child: Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.location_pin),
+                                      SizedBox(width: 10,),
+                                      Text(widget.BoxName.toString(),
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        softWrap: true,
                                       ),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      softWrap: true,
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -137,7 +172,7 @@ class _BoxpageState extends State<Boxpage> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-          
+
                               ),
                             ),
                           ),
@@ -161,7 +196,7 @@ class _BoxpageState extends State<Boxpage> {
                           padding: const EdgeInsets.only(left: 10,right: 20),
                           child: Center(
                             child: Row(
-          
+
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.currency_rupee,color: Colors.white,size: 30,),
@@ -172,7 +207,7 @@ class _BoxpageState extends State<Boxpage> {
                                     fontSize: 30,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-          
+
                                   ),
                                 ),
                                 SizedBox(width: 10,),
@@ -240,9 +275,74 @@ class _BoxpageState extends State<Boxpage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20,left: 50,right: 50),
                       child: InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Payment()));
-                      },
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: Text("Terms & Conditions"),
+                              content: Terms_Conditions.isNotEmpty
+                                  ? SizedBox(
+                                width: double.maxFinite, 
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: Terms_Conditions.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 2),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.check_circle, color: Colors.red, size: 20),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(
+                                              Terms_Conditions[index],
+                                              style: TextStyle(fontSize: 14),
+                                              softWrap: true,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                                  : Text("No terms available"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context); // Close dialog
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Payment(
+                                          boxname: widget.BoxName.toString(),
+                                          address: widget.Location.toString(),
+                                          image: widget.Image.toString(),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height / 18,
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    padding: const EdgeInsets.all(14),
+                                    child: Center(
+                                      child: Text(
+                                        "OKAY",
+                                        style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           height: 50,
@@ -260,7 +360,6 @@ class _BoxpageState extends State<Boxpage> {
                         ),
                       ),
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20,),
                       child: Container(
@@ -286,28 +385,30 @@ class _BoxpageState extends State<Boxpage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 10,right: 20),
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: feature.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 2),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Icon(Icons.check_circle, color: Colors.green, size: 20),
-                                        SizedBox(width: 10),
-                                        Expanded(
-                                          child: Text(
-                                            feature[index],
-                                            style: TextStyle(fontSize: 14),
-                                            softWrap: true,
+                              child: SingleChildScrollView(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: feature.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 2),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.check_circle, color: Colors.green, size: 20),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(
+                                              feature[index],
+                                              style: TextStyle(fontSize: 14),
+                                              softWrap: true,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ],

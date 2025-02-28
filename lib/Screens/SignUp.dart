@@ -1,4 +1,5 @@
 import 'package:crizonex/Screens/Login.dart';
+import 'package:crizonex/Screens/Second_Page.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatefulWidget {
@@ -179,17 +180,22 @@ class _SignupState extends State<Signup> {
                                 ),
                               ),
                               SizedBox(height: 50),
-                              Container(
-                                height: 50,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Sign Up",
-                                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ListOfBox()));
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Sign Up",
+                                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ),
                               ),
