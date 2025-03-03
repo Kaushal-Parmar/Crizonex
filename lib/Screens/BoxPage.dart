@@ -90,66 +90,65 @@ class _BoxpageState extends State<Boxpage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 10,left: 10),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height/18,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 0),
-                              child: Container(
-                                height: MediaQuery.of(context).size.height,
-                                width: MediaQuery.of(context).size.width/1.4,
-                                decoration: BoxDecoration(
-                                  color: Colors.green.withOpacity(0.5),
-                                  borderRadius: BorderRadius.circular(10)
-                                ),
-
-                                child: Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.location_pin),
-                                      SizedBox(width: 10,),
-                                      Text(widget.BoxName.toString(),
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
+                      child: Expanded(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height/10,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                        
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 0),
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width/1.4,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(10)
+                                  ),
+                                    
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.location_pin),
+                                        SizedBox(width: 10,),
+                                        Text(widget.BoxName.toString(),
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          softWrap: true,
                                         ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        softWrap: true,
-                                      ),
-                                    ],
+                                      ],
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: 35,),
-                            Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.black.withOpacity(0.1)
+                              SizedBox(width: 40,),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.black.withOpacity(0.1)
+                                ),
+                                child: Icon(
+                                  Icons.favorite_border,
+                                  size: 30,
+                                ),
                               ),
-                              child: Icon(
-                                Icons.favorite_border,
-                                size: 30,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
 
                     SizedBox(height: 10),
 
-
-                    //praveen
                     Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: Container(
@@ -170,7 +169,7 @@ class _BoxpageState extends State<Boxpage> {
                               maxLines: 10,
                               softWrap: true,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
 
                               ),
@@ -278,68 +277,70 @@ class _BoxpageState extends State<Boxpage> {
                         onTap: () {
                           showDialog(
                             context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: Text("Terms & Conditions"),
-                              content: Terms_Conditions.isNotEmpty
-                                  ? SizedBox(
-                                width: double.maxFinite, 
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: Terms_Conditions.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 2),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Icon(Icons.check_circle, color: Colors.red, size: 20),
-                                          SizedBox(width: 10),
-                                          Expanded(
-                                            child: Text(
-                                              Terms_Conditions[index],
-                                              style: TextStyle(fontSize: 14),
-                                              softWrap: true,
+                            builder: (BuildContext context) => Expanded(
+                              child: AlertDialog(
+                                title: Text("Terms & Conditions"),
+                                content: Terms_Conditions.isNotEmpty
+                                    ? SizedBox(
+                                  width: double.maxFinite, 
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: Terms_Conditions.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 2),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Icon(Icons.check_circle, color: Colors.red, size: 20),
+                                            SizedBox(width: 10),
+                                            Expanded(
+                                              child: Text(
+                                                Terms_Conditions[index],
+                                                style: TextStyle(fontSize: 14),
+                                                softWrap: true,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                                  : Text("No terms available"),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context); // Close dialog
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Payment(
-                                          boxname: widget.BoxName.toString(),
-                                          address: widget.Location.toString(),
-                                          image: widget.Image.toString(),
+                                          ],
                                         ),
+                                      );
+                                    },
+                                  ),
+                                )
+                                    : Text("No terms available"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context); // Close dialog
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Payment(
+                                            boxname: widget.BoxName.toString(),
+                                            address: widget.Location.toString(),
+                                            image: widget.Image.toString(),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
-                                    );
-                                  },
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height / 18,
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    padding: const EdgeInsets.all(14),
-                                    child: Center(
-                                      child: Text(
-                                        "OKAY",
-                                        style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                                      padding: const EdgeInsets.all(14),
+                                      child: Center(
+                                        child: Text(
+                                          "OKAY",
+                                          style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },
@@ -362,56 +363,58 @@ class _BoxpageState extends State<Boxpage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20,),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height/1.5,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors.black12,
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.star,size: 25,),
-                                  SizedBox(width: 10,),
-                                  Text("Features",style: TextStyle(fontSize: 20),),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10,right: 20),
-                              child: SingleChildScrollView(
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: feature.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 2),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Icon(Icons.check_circle, color: Colors.green, size: 20),
-                                          SizedBox(width: 10),
-                                          Expanded(
-                                            child: Text(
-                                              feature[index],
-                                              style: TextStyle(fontSize: 14),
-                                              softWrap: true,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
+                      child: Expanded(
+                        child: Container(
+                          
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.star,size: 25,),
+                                    SizedBox(width: 10,),
+                                    Text("Features",style: TextStyle(fontSize: 20),),
+                                  ],
                                 ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10,right: 20),
+                                child: SingleChildScrollView(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: feature.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 2),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Icon(Icons.check_circle, color: Colors.green, size: 20),
+                                            SizedBox(width: 10),
+                                            Expanded(
+                                              child: Text(
+                                                feature[index],
+                                                style: TextStyle(fontSize: 14),
+                                                softWrap: true,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

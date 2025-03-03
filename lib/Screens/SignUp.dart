@@ -33,11 +33,10 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
 
-                SizedBox(height: 20),
+                SizedBox(height: 24),
 
                 // Black container with full bottom cover
                 SizedBox(
-                  height: screenHeight * 0.81, // 80% of the screen height
                   width: double.infinity,
                   child: Container(
                     decoration: BoxDecoration(

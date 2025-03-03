@@ -62,27 +62,27 @@ class _ListOfBoxState extends State<ListOfBox> {
             width: 200,
           ),
           actions: [
-      
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Column(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.notifications,color: Colors.white,size: 30,),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.person,color: Colors.white,size: 30,),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
-                        },
-                      ),
-                    ],
+
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Column(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.notifications,color: Colors.white,size: 30,),
+                    onPressed: () {},
                   ),
-                ),
-      
+                  IconButton(
+                    icon: Icon(Icons.person,color: Colors.white,size: 30,),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
+                    },
+                  ),
+                ],
+              ),
+            ),
+
           ],
-      
+
         ),
         body: Column(
           children: [
@@ -105,74 +105,78 @@ class _ListOfBoxState extends State<ListOfBox> {
                   return Padding(
                     padding: const EdgeInsets.only(left: 16, right: 16,bottom: 10),
                     child: InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Boxpage(Image:pics[index],BoxName: boxNames[index],Location: addresses[index],)));
-                      },
-                      child: Container(
-                        height: MediaQuery.of(context).size.height / 5,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-      
-                          image: DecorationImage(image: AssetImage("asset/images/Container_back.png"),fit: BoxFit.cover),
-                          borderRadius: const BorderRadius.only(
-      
-                          ),
-                          border: Border.all(color: Colors.black, width: 1),
-                        ),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              child: Image.asset(
-                                pics[index],
-                                height: MediaQuery.of(context).size.height / 5,
-                                width: 120,
-                                fit: BoxFit.cover,
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Boxpage(Image:pics[index],BoxName: boxNames[index],Location: addresses[index],)));
+                        },
+                        child: Card(
+                          child: Container(
+
+
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+
+                              image: DecorationImage(image: AssetImage("asset/images/Container_back.png"),fit: BoxFit.cover),
+                              borderRadius: const BorderRadius.only(
+
                               ),
+                              border: Border.all(color: Colors.black, width: 1),
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      boxNames[index],
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      softWrap: true,
-                                    ),
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  child: Image.asset(
+                                    pics[index],
+                                    height: MediaQuery.of(context).size.height / 4,
+                                    width: 120,
+
+                                    fit: BoxFit.cover,
                                   ),
-                                  const SizedBox(height: 5),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const Icon(Icons.location_pin, size: 18),
-                                        const SizedBox(width: 5),
-                                        Expanded(
-                                          child: Text(
-                                            addresses[index],
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 5,
-                                            softWrap: true,
-                                            style: const TextStyle(fontSize: 14),
-                                          ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          boxNames[index],
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          softWrap: true,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Icon(Icons.location_pin, size: 18),
+                                            const SizedBox(width: 5),
+                                            Expanded(
+                                              child: Text(
+                                                addresses[index],
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 5,
+                                                softWrap: true,
+                                                style: const TextStyle(fontSize: 14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        )
                     ),
                   );
                 },
