@@ -1,3 +1,4 @@
+import 'package:crizonex/Screens/Bookslot.dart';
 import 'package:crizonex/Screens/Payment.dart';
 import 'package:crizonex/Screens/UserInfo.dart';
 import 'package:flutter/material.dart';
@@ -311,11 +312,12 @@ class _BoxpageState extends State<Boxpage> {
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.pop(context); // Close dialog
+                                      Navigator.pop(context);
+                                      // Close dialog
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => Payment(
+                                          builder: (context) => Bookslot(
                                             boxname: widget.BoxName.toString(),
                                             address: widget.Location.toString(),
                                             image: widget.Image.toString(),

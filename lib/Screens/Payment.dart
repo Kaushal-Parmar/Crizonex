@@ -6,7 +6,9 @@ class Payment extends StatefulWidget {
   var boxname;
   var address;
   var image;
-  Payment({super.key,this.boxname,this.address,this.image});
+  var date;
+  var time;
+  Payment({super.key,this.boxname,this.address,this.image,this.date,this.time});
 
   @override
   State<Payment> createState() => _PaymentState();
@@ -117,6 +119,7 @@ class _PaymentState extends State<Payment> {
 
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
@@ -124,8 +127,8 @@ class _PaymentState extends State<Payment> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("16 March 2025",style: TextStyle(fontSize: 12),),
-                                Text("6:00 Am to 10:00Am",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                Text(widget.date.toString(),style: TextStyle(fontSize: 12),),
+                                Text(widget.time.toString(),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                               ],
                             ),
                           ),
