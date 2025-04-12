@@ -1,284 +1,255 @@
-import 'package:crizonex/Screens/UserInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'Payment.dart';
 
 class Bookslot extends StatefulWidget {
-  var boxname;
-  var address;
-  var image;
-  Bookslot({ required this.boxname,required this.address, required this.image});
+  final String boxname;
+  final String address;
+  final String image;
 
+  Bookslot({required this.boxname, required this.address, required this.image});
 
   @override
   State<Bookslot> createState() => _BookslotState();
-
-
 }
 
 class _BookslotState extends State<Bookslot> {
-
   DateTime selectedDate = DateTime.now();
-  String dropdownValue = '00-01';
-  String dropdownValue2 = '00-01';
+  String selectedTime = "";
 
-  // Example of booked slots for demonstration
-  final List<String> bookedSlots = ['10-11', '15-16', '20-21'];
-
-  List<String> timeSlots = List.generate(24, (index) {
-    String start = index.toString().padLeft(2, '0');
-    String end = (index + 1).toString().padLeft(2, '0');
-    return '$start-$end';
+  final List<String> timeSlots = List.generate(24, (index) {
+    String start = _formatTime(index);
+    String end = _formatTime(index + 1);
+    return "$start - $end";
   });
 
-  // Function to check slot availability
-  bool isSlotAvailable(String time) {
-    return !bookedSlots.contains(time);
+  final Map<String, bool> box1Selections = {};
+  final Map<String, bool> box2Selections = {};
+
+  static String _formatTime(int hour) {
+    String period = hour < 12 ? "AM" : "PM";
+    int formattedHour = hour % 12 == 0 ? 12 : hour % 12;
+    return "$formattedHour:00 $period";
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    for (var slot in timeSlots) {
+      box1Selections[slot] = false;
+      box2Selections[slot] = false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
-        backgroundColor: Colors.black.withOpacity(0.6),
-        title: Image.asset(
-          'asset/images/Text_logo2.png',
-          fit: BoxFit.contain,
-          height: 100,
+        iconTheme: IconThemeData(color: Colors.white),
+        toolbarHeight: 90,
+        backgroundColor: Colors.green,
+        centerTitle: true,
+        title: SizedBox(
+          height: 210,
           width: 200,
+          child: Image.asset('asset/images/logo2.png', fit: BoxFit.contain),
         ),
-        actions: [
-
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Column(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.notifications,color: Colors.white,size: 30,),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(Icons.person,color: Colors.white,size: 30,),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
-                  },
-                ),
-              ],
-            ),
-          ),
-
-        ],
-
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          children: [
-            // Date Picker Row
-            SizedBox(height: 10,),
-
-            Container(
-              height: 100,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(image:AssetImage("asset/images/back_side_slot.jpg"),fit: BoxFit.cover)
-              ),
-              child:Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-
-                children: [
-                  Center(child: Text(" ${widget.boxname}",style: TextStyle(color: Colors.white,fontSize: 30,backgroundColor: Colors.black.withOpacity(0.4)),)),
-
-                ],
-              ),
-
-            ),
-            SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  DateFormat('yMMMd').format(selectedDate),
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                InkWell(
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: selectedDate,
-                      firstDate: DateTime(2022),
-                      lastDate: DateTime(2060),
-                    );
-                    if (pickedDate != null) {
-                      setState(() {
-                        selectedDate = pickedDate;
-                      });
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 2, color: Colors.white),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.calendar_month, color: Colors.white),
-                        SizedBox(width: 5),
-                        Text("Select", style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-
-            // Time Slot Selection Row
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // Slot A
-                  Column(
-                    children: [
-                      slotBox("A"),
-                      SizedBox(height: 20),
-                      DropdownButton<String>(
-                        value: dropdownValue,
-                        icon: Icon(Icons.keyboard_arrow_down),
-                        items: timeSlots.map((String item) {
-                          return DropdownMenuItem(
-                            value: item,
-                            child: Text(item),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue = newValue!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  // Slot B
-                  Column(
-                    children: [
-                      slotBox("B"),
-                      SizedBox(height: 20),
-                      DropdownButton<String>(
-                        value: dropdownValue2,
-                        icon: Icon(Icons.keyboard_arrow_down),
-                        items: timeSlots.map((String item) {
-                          return DropdownMenuItem(
-                            value: item,
-                            child: Text(item),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue2 = newValue!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 20),
-
-            // Display Selected Date & Time
-            Text(
-              "Selected Date: ${DateFormat('yMMMd').format(selectedDate)}",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "Selected Time: $dropdownValue",
-              style: TextStyle(fontSize: 16),
-            ),
-
-            // Slot Availability Check
-            SizedBox(height: 20),
-            Text(
-              isSlotAvailable(dropdownValue) ? "Available" : "Not Available",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: isSlotAvailable(dropdownValue) ? Colors.green : Colors.red,
-              ),
-            ),
-            SizedBox(height: 40,),
-            InkWell(
-              onTap:() {
-                Navigator.pop(context);
-                // Close dialog
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Payment(
-                      boxname: widget.boxname.toString(),
-                      address: widget.address.toString(),
-                      image: widget.image.toString(),
-                      date: DateFormat('yMMMd').format(selectedDate),
-                      time: dropdownValue,
-                    ),
-                  ),
-                );
-              },
-              child: Container(
-                height: 50,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+              Container(
+                height: 100,
                 width: double.infinity,
-                decoration:BoxDecoration(
-                    color: Colors.blue
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("asset/images/back_side_slot.jpg"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                child: Center(child: Text("Booking",style:TextStyle(fontSize: 25,color: Colors.white),)),
+                child: Center(
+                  child: Text(
+                    widget.boxname,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      backgroundColor: Colors.black.withOpacity(0.4),
+                    ),
+                  ),
+                ),
               ),
-            )
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    DateFormat('yMMMd').format(selectedDate),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: selectedDate,
+                        firstDate: DateTime(2022),
+                        lastDate: DateTime(2060),
+                      );
+                      if (pickedDate != null) {
+                        setState(() {
+                          selectedDate = pickedDate;
+                        });
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: 2, color: Colors.white),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.calendar_month, color: Colors.white),
+                          SizedBox(width: 5),
+                          Text("Select", style: TextStyle(color: Colors.white)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              _buildTimeSlotRow("Box 1", box1Selections),
+              SizedBox(height: 16),
+              _buildTimeSlotRow("Box 2", box2Selections),
+              SizedBox(height: 20),
+          
+              TextField(
+                // controller: titlecontroller,
+                decoration: InputDecoration(
+                  hintText: "Enter the booker Name",
+                  labelText: "Name ",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
 
-          ],
+              TextField(
+                // controller: titlecontroller,
+                decoration: InputDecoration(
+                  hintText: "Enter the booker Phone Number ",
+                  labelText: "Phone Number",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20),topRight: Radius.circular(20))
+                ),
+                child: Center(
+                  child: Text(
+                    "Selected Time: $selectedTime",
+                    style: TextStyle(fontSize: 16,color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(height:10,),
+              Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20),topRight: Radius.circular(20))
+                ),
+                child: Center(
+                  child: Text(
+                    "Date is : ${DateFormat('yMMMd').format(selectedDate)} ",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+          
+              SizedBox(height: 20),
+              InkWell(
+                onTap: selectedTime.isNotEmpty
+                    ? () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Payment(
+                        boxname: widget.boxname,
+                        address: widget.address,
+                        image: widget.image,
+                        date: DateFormat('yMMMd').format(selectedDate),
+                        time: selectedTime,
+                      ),
+                    ),
+                  );
+                }
+                    : null,
+          
+                child: Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: selectedTime.isNotEmpty ? Colors.blue : Colors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Book ",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30,),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // Function to generate slot UI
-  Widget slotBox(String label) {
-    return Stack(
-      alignment: Alignment.center,
+  Widget _buildTimeSlotRow(String title, Map<String, bool> selections) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 200,
-          width: 100,
-          decoration: BoxDecoration(
-            border: Border.all(width: 2, color: Colors.black),
-            color: Colors.green,
-          ),
-        ),
-        Positioned(
-          top: 20,
-          child: Text(
-            label,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 80,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 10,
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: 40,
-            child: Image.asset("asset/images/logo__main.png"),
+        Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        SizedBox(height: 4),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: timeSlots.map((slot) {
+              return ChoiceChip(
+                label: Text(slot, style: TextStyle(fontSize: 12)),
+                selected: selections[slot] ?? false,
+                onSelected: (bool selected) {
+                  setState(() {
+                    selections.forEach((key, value) => selections[key] = false);
+                    selections[slot] = selected;
+                    if (selected) selectedTime = slot;
+                  });
+                },
+              );
+            }).toList(),
           ),
         ),
       ],

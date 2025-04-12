@@ -3,6 +3,8 @@ import 'package:crizonex/Screens/SignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 
+import 'MainScreen.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -31,11 +33,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 60,),
+              SizedBox(height: 20,),
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: Colors.green,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(100)),
                 ),
                 child: Column(
@@ -53,13 +55,13 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
-                          buildInputField("Phone Number", "1234567891", Icons.call, false),
+                          buildInputFieldnumber("Phone Number", "1234567891", Icons.call, false),
                           SizedBox(height: 20),
-                          buildInputField("Password", "**************", Icons.remove_red_eye, true),
+                          buildInputFieldpass("Password", "**************", Icons.remove_red_eye, true),
                           SizedBox(height: 50),
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => ListOfBox()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
                             },
                             child: buildButton("Login"),
                           ),
@@ -85,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 60),
                   ],
                 ),
               ),
@@ -96,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildInputField(String label, String hint, IconData icon, bool isPassword) {
+  Widget buildInputFieldnumber(String label, String hint, IconData icon, bool isPassword) {
     return Container(
       height: 90,
       width: double.infinity,
@@ -120,6 +122,43 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: hint,
+                suffixIcon: Icon(icon),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget buildInputFieldpass(String label, String hint, IconData icon, bool isPassword) {
+    return Container(
+      height: 90,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+            bottomLeft: Radius.circular(20)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 20),
+            child: Text(
+              label,
+              style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: TextField(
+
               obscureText: isPassword,
               decoration: InputDecoration(
                 border: InputBorder.none,

@@ -44,35 +44,18 @@ class _BoxpageState extends State<Boxpage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 100,
-          backgroundColor: Colors.black.withOpacity(0.6),
-          title: Image.asset(
-            'asset/images/Text_logo2.png',
-            fit: BoxFit.contain,
-            height: 100,
-            width: 200,
-          ),
-          actions: [
-
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications,color: Colors.white,size: 30,),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.person,color: Colors.white,size: 30,),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
-                    },
-                  ),
-                ],
-              ),
+          iconTheme: IconThemeData(color: Colors.white),
+          toolbarHeight: 90,
+          backgroundColor: Colors.green,
+          centerTitle: true, // Centers the title
+          title: SizedBox(
+            height: 210, // Adjust the height as needed
+            width: 200,  // Adjust the width as needed
+            child: Image.asset(
+              'asset/images/logo2.png',
+              fit: BoxFit.contain,
             ),
-
-          ],
+          ),
 
         ),
         body: SingleChildScrollView(
@@ -130,18 +113,6 @@ class _BoxpageState extends State<Boxpage> {
                                 ),
                               ),
                               SizedBox(width: 40,),
-                              Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.black.withOpacity(0.1)
-                                ),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  size: 30,
-                                ),
-                              ),
                             ],
                           ),
                         ),

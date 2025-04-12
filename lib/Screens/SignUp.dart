@@ -1,4 +1,5 @@
 import 'package:crizonex/Screens/Login.dart';
+import 'package:crizonex/Screens/MainScreen.dart';
 import 'package:crizonex/Screens/Second_Page.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class _SignupState extends State<Signup> {
                   width: double.infinity,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: Colors.green,
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(100)),
                     ),
                     child: Column(
@@ -105,6 +106,7 @@ class _SignupState extends State<Signup> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 20),
                                       child: TextField(
+                                        keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: "1234567891",
@@ -181,7 +183,7 @@ class _SignupState extends State<Signup> {
                               SizedBox(height: 50),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ListOfBox()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MainPage()));
                                 },
                                 child: Container(
                                   height: 50,

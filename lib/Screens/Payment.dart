@@ -9,11 +9,9 @@ class Payment extends StatefulWidget {
   var date;
   var time;
   Payment({super.key,this.boxname,this.address,this.image,this.date,this.time});
-
   @override
   State<Payment> createState() => _PaymentState();
 }
-
 class _PaymentState extends State<Payment> {
   List<Payment_Data> Payment_info=[
     Payment_Data("asset/images/g_pay.png", "Google Pay"),
@@ -30,35 +28,18 @@ class _PaymentState extends State<Payment> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 100,
-          backgroundColor: Colors.black.withOpacity(0.6),
-          title: Image.asset(
-            'asset/images/Text_logo2.png',
-            fit: BoxFit.contain,
-            height: 100,
-            width: 200,
-          ),
-          actions: [
-
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications,color: Colors.white,size: 30,),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.person,color: Colors.white,size: 30,),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
-                    },
-                  ),
-                ],
-              ),
+          iconTheme: IconThemeData(color: Colors.white),
+          toolbarHeight: 90,
+          backgroundColor: Colors.green,
+          centerTitle: true, // Centers the title
+          title: SizedBox(
+            height: 210, // Adjust the height as needed
+            width: 200,  // Adjust the width as needed
+            child: Image.asset(
+              'asset/images/logo2.png',
+              fit: BoxFit.contain,
             ),
-
-          ],
+          ),
 
         ),
         body: Padding(
@@ -138,7 +119,7 @@ class _PaymentState extends State<Payment> {
                             child: Row(
                               children: [
                                 Icon(Icons.currency_rupee,size: 30,),
-                                Text("3500",style: TextStyle(fontSize: 30),),
+                                Text("1000",style: TextStyle(fontSize: 30),),
                               ],
                             ),
                           ))

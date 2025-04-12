@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1023345130735",
+    "project_id": "fir-fbaea",
+    "storage_bucket": "fir-fbaea.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023345130735:android:37ef5df55bf13f45596f1a",
+        "android_client_info": {
+          "package_name": "com.example.crizonex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcbAU9LjzwBQatcy-OUCUK-XyQP09sAN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

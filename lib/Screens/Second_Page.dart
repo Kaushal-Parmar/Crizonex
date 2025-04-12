@@ -1,5 +1,4 @@
 import 'package:crizonex/Screens/BoxPage.dart';
-import 'package:crizonex/Screens/UserInfo.dart';
 import 'package:flutter/material.dart';
 
 class ListOfBox extends StatefulWidget {
@@ -10,8 +9,9 @@ class ListOfBox extends StatefulWidget {
 }
 
 class _ListOfBoxState extends State<ListOfBox> {
+  TextEditingController searchController = TextEditingController();
 
-   var pics = [
+  final List<String> pics = [
     "asset/images/Free_hit.jpg",
     "asset/images/Street_add.jpg",
     "asset/images/7_star.jpg",
@@ -23,160 +23,187 @@ class _ListOfBoxState extends State<ListOfBox> {
     "asset/images/Somnath.jpg",
   ];
 
-   var boxNames = [
+  final List<String> boxNames = [
     "Free Hit - Box Cricket",
-    "StrEat Adda Box Cricket ",
-    "7 Star sports club",
-    "Backbenchers box cricket",
-    "The Capital Cricketbox",
-    "The Infinity BoxCricket",
-    "NH51 Box cricket",
-    "P2B CRICKET BOX",
-    "Somnath Cricket "
+    "StrEat Adda Box Cricket",
+    "7 Star Sports Club",
+    "Backbenchers Box Cricket",
+    "The Capital Cricket Box",
+    "The Infinity Box Cricket",
+    "NH51 Box Cricket",
+    "P2B Cricket Box",
+    "Somnath Cricket"
   ];
 
-  var addresses = [
-    "Raghukul Farm, Airport Rd, opp. D.B.Park, near PM Avas Yojna, Subhashnagar, Bhavnagar, Gujarat 364001",
-    "Streat Adda Cafe, Bhavnagar - Sidsar Rd, opp. GMIU College, opposite Gyanmanjari College, Bhavnagar, Gujarat 364001",
-    "7Star Sports Club, 150ft, Ring Rd, behind Nayra Petrol Pump, Tarasamiya, Bhavnagar, Gujarat 364001",
-    "opposite Top 3 lords, Budhel, Bhavnagar, Gujarat 364002",
-    "beside aradhna hotel street, near d-mart, Kailash Dham Society, Bhavnagar, Gujarat 364002",
-    "Plot No. 5, Hill Park to S.S.Engineering college road, Bhavnagar - Sidsar Rd, Bhavnagar, Gujarat 364001, SIDSAR, Gujarat 364002",
+  final List<String> addresses = [
+    "Raghukul Farm, Airport Rd, Bhavnagar, Gujarat 364001",
+    "Streat Adda Cafe, Bhavnagar, Gujarat 364001",
+    "7Star Sports Club, Bhavnagar, Gujarat 364001",
+    "Opposite Top 3 Lords, Budhel, Bhavnagar, Gujarat 364002",
+    "Near D-Mart, Kailash Dham Society, Bhavnagar, Gujarat 364002",
+    "Hill Park to S.S.Engineering college road, Bhavnagar, Gujarat 364001",
     "NH51, Gujarat 364002",
     "Bhavnagar, Gujarat 364110",
-    "Shivam Amrut 9, Top 3 circle, road, Bhavnagar, Gujarat 364002"
+    "Top 3 Circle, Road, Bhavnagar, Gujarat 364002"
   ];
+
+  List<String> filteredPics = [];
+  List<String> filteredBoxNames = [];
+  List<String> filteredAddresses = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredPics = List.from(pics);
+    filteredBoxNames = List.from(boxNames);
+    filteredAddresses = List.from(addresses);
+  }
+
+  void filterSearchResults(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        filteredPics = List.from(pics);
+        filteredBoxNames = List.from(boxNames);
+        filteredAddresses = List.from(addresses);
+      });
+      return;
+    }
+
+    List<String> tempPics = [];
+    List<String> tempBoxNames = [];
+    List<String> tempAddresses = [];
+
+    for (int i = 0; i < boxNames.length; i++) {
+      if (boxNames[i].toLowerCase().contains(query.toLowerCase()) ||
+          addresses[i].toLowerCase().contains(query.toLowerCase())) {
+        tempPics.add(pics[i]);
+        tempBoxNames.add(boxNames[i]);
+        tempAddresses.add(addresses[i]);
+      }
+    }
+
+    setState(() {
+      filteredPics = tempPics;
+      filteredBoxNames = tempBoxNames;
+      filteredAddresses = tempAddresses;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          toolbarHeight: 100,
-          backgroundColor: Colors.black.withOpacity(0.6),
-          title: Image.asset(
-            'asset/images/Text_logo2.png',
-            fit: BoxFit.contain,
-            height: 100,
-            width: 200,
-          ),
-          actions: [
-
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications,color: Colors.white,size: 30,),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.person,color: Colors.white,size: 30,),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-          ],
-
-        ),
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 5,left: 14,right: 14,top: 5),
+              padding: const EdgeInsets.all(14.0),
               child: TextField(
+                controller: searchController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   hintText: "Search...",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      searchController.clear();
+                      filterSearchResults('');
+                    },
+                  ),
                 ),
+                onChanged: (value) => filterSearchResults(value),
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: pics.length??boxNames.length??addresses.length,
+              child: filteredBoxNames.isEmpty
+                  ? const Center(child: Text("No results found"))
+                  : ListView.builder(
+                itemCount: filteredPics.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16,bottom: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                     child: InkWell(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Boxpage(Image:pics[index],BoxName: boxNames[index],Location: addresses[index],)));
-                        },
-                        child: Card(
-                          child: Container(
-
-
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-
-                              image: DecorationImage(image: AssetImage("asset/images/Container_back.png"),fit: BoxFit.cover),
-                              borderRadius: const BorderRadius.only(
-
-                              ),
-                              border: Border.all(color: Colors.black, width: 1),
-                            ),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  child: Image.asset(
-                                    pics[index],
-                                    height: MediaQuery.of(context).size.height / 4,
-                                    width: 120,
-
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          boxNames[index],
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          softWrap: true,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const Icon(Icons.location_pin, size: 18),
-                                            const SizedBox(width: 5),
-                                            Expanded(
-                                              child: Text(
-                                                addresses[index],
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 5,
-                                                softWrap: true,
-                                                style: const TextStyle(fontSize: 14),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Boxpage(
+                              Image: filteredPics[index],
+                              BoxName: filteredBoxNames[index],
+                              Location: filteredAddresses[index],
                             ),
                           ),
-                        )
+                        );
+                      },
+                      child: Card(
+                        elevation: 5,
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: AssetImage("asset/images/Container_back.png"),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  filteredPics[index],
+                                  height: MediaQuery.of(context).size.height / 4,
+                                  width: 120,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Text(
+                                        filteredBoxNames[index],
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Icon(Icons.location_pin, size: 18),
+                                          const SizedBox(width: 5),
+                                          Expanded(
+                                            child: Text(
+                                              filteredAddresses[index],
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              softWrap: true,
+                                              style: const TextStyle(fontSize: 14),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   );
                 },

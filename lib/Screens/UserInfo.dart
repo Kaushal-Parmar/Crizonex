@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'MyAccount.dart';
+import 'UserNotification.dart';
+import 'Userhistory.dart';
 class ViewPage extends StatefulWidget {
   const ViewPage({super.key});
 
@@ -8,102 +11,294 @@ class ViewPage extends StatefulWidget {
 }
 
 class _ViewPageState extends State<ViewPage> {
+  void _showMyDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: const Text("My Account"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildInfoRow("UserName:", "Kelvin_007"),
+                SizedBox(height: 10),
+                _buildInfoRow("Email:", "kelvin@example.com"),
+                SizedBox(height: 10),
+                _buildInfoRow("Phone:", "+91 9876543210"),
+                SizedBox(height: 10),
+                _buildInfoRow("Password", "kelvin008899"),
+
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void _showMyDialogLogout() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("LogOut "),
+          content: Text("Are you sure?"),
+          actions: [
+            TextButton(
+              child: const Text("Yes",style: TextStyle(color: Colors.green),),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text("No",style: TextStyle(color: Colors.red),),
+              onPressed: () {
+
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+        Text(value),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage("asset/images/user_back.jpg"),fit: BoxFit.cover),
-            ),child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 100),
-                child: CircleAvatar(
-                  backgroundImage: AssetImage("asset/images/user_logo_2.png"),
-                  backgroundColor: Colors.white,
-                  radius: 60,
-                ),
-              ),
-              SizedBox(height: 40,),
-              Padding(
-                padding: const EdgeInsets.only(left: 60,right: 60),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height/18,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(40),bottomLeft: Radius.circular(40),bottomRight: Radius.circular(40))
-                    ),
-                    child:
-                Center(child: Text("Mr.John_Wick",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),))),
-              ),
-                
-              Padding(
-                padding: const EdgeInsets.only(top: 40,left: 80),
-                child: Column(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                SizedBox(height: 20,),
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Icon(Icons.favorite,size: 40,color:Colors.red ,),
-                        SizedBox(width: 20,),
-                        Text("Favorite",style: TextStyle(fontSize: 20),)
-                      ],
+                    CircleAvatar(
+                      backgroundImage: AssetImage("asset/images/img.png"),
+                      radius: 40,
                     ),
-                    SizedBox(height: 20,),
-                    Row(
+                    SizedBox(width: 10,),
+                    Column(
                       children: [
-                        Icon(Icons.phone,size: 40,color:Colors.black ,),
-                        SizedBox(width: 20,),
-                        Text("+91 1234567890",style: TextStyle(fontSize: 20),)
+                        Text("Kelvin_007",style: TextStyle(fontSize: 25),),
+                        Row(
+                          children: [
+                            Text("+91",style: TextStyle(fontSize: 15),),
+                            Text("998866234",style: TextStyle(fontSize: 15),)
+                          ],
+                        )
                       ],
-                    ),
-                    SizedBox(height: 20,),
-                    Row(
-                      children: [
-                        Icon(Icons.remove_red_eye,size: 40,color:Colors.black ,),
-                        SizedBox(width: 20,),
-                        Text("Mrjosh1100",style: TextStyle(fontSize: 20),)
-                      ],
-                    ),
-                    SizedBox(height: 20,),
-                    Row(
-                      children: [
-                        Icon(Icons.notifications_active,size: 40,color:Colors.black ,),
-                        SizedBox(width: 20,),
-                        Text("Notification",style: TextStyle(fontSize: 20),)
-                      ],
-                    ),
-                    SizedBox(height: 20,),
-                    Row(
-                      children: [
-                        Icon(Icons.logout,size: 40,color:Colors.black ,),
-                        SizedBox(width: 20,),
-                        Text("Logout",style: TextStyle(fontSize: 20),)
-                      ],
-                    ),
-                
+                    )
                   ],
                 ),
-              ),
-                
-                
-                
-                
-            ],
-          ),
-          ),
+
+                InkWell(
+                  onTap: () {
+                    _showMyDialog(context);
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.account_circle),
+                    title: Text("My Account "),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Userhistory(),));
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.history),
+                    title: Text("History "),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder:(context) => Usernotification(), ));
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.notifications),
+                    title: Text("Notification "),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return getBottomsheet();
+                        });
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.edit),
+                    title: Text("Editing "),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    _showMyDialogLogout();
+
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text("Log-out ",),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                  ),
+                ),
+
+              ],
+            ),
+          )
         )
       
       ),
     );
   }
+  Widget getBottomsheet({bool isUpdate = false, int id = 0}) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Update Data',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            // controller: titlecontroller,
+            decoration: InputDecoration(
+              hintText: "Enter Update Mail i'd",
+              labelText: "UserName",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            // controller: titlecontroller,
+            decoration: InputDecoration(
+              hintText: "Enter Update Mail i'd",
+              labelText: "Mail I'd",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            keyboardType: TextInputType.number,
+            // controller: titlecontroller,
+            decoration: InputDecoration(
+              hintText: "Enter Update Phone number ",
+              labelText: "Phone Number",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            // controller: titlecontroller,
+            decoration: InputDecoration(
+              hintText: "Enter Update new password ",
+              labelText: "Password ",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(width: 1, color: Colors.black),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {
 
+                  },
+                  child: Text("Update data"),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(width: 1, color: Colors.black),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Cancel"),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Error"),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: const Text("Okay"),
+          ),
+        ],
+      ),
+    );
+  }
 
 }
+
 
 
 
